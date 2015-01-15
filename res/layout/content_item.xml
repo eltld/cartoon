@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/cover_imageView"
+        android:layout_width="100dp"
+        android:layout_height="133dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/cover_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_cover" />
+
+    <TextView
+        android:id="@+id/title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="吃果果大作战"
+        android:textColor="#FF6C4E21"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/desc_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="56话"
+        android:textColor="#FFB5A489"
+        android:textSize="12sp" />
+
+</LinearLayout>

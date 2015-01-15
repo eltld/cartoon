@@ -1,0 +1,385 @@
+package com.cutv.mobile.cartoon;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sms.purchasesdk.cartoon.SMSPaycode;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cutv.mobile.component.AsynDownloadImageTask;
+import com.cutv.mobile.component.AsynDownloadImageTask.DownloadTask;
+import com.cutv.mobile.component.AsynDownloadImageTask.OnDownloadTaskListener;
+import com.cutv.mobile.data.DataModule;
+import com.cutv.mobile.pay.IAPListener;
+import com.cutv.mobile.photoview.PhotoView;
+import com.cutv.mobile.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import com.cutv.mobile.utils.HttpUrlHelper;
+import com.cutv.mobile.utils.MyUtils;
+import com.cutv.mobile.utils.SharedUtils;
+
+import fynn.app.PromptDialog;
+
+public class PictureViewActivity extends BaseActivity implements
+		OnClickListener, OnPageChangeListener {
+	private ImageView img_back;
+	private TextView txt_indicator;
+	ViewPager _viewPager = null;
+	private RelativeLayout lay;
+
+	List<View> _viewList = new ArrayList<View>();
+
+	List<String> _dataList = new ArrayList<String>();
+	List<String> needPayList = new ArrayList<String>();
+
+	private AsynDownloadImageTask _downloader = new AsynDownloadImageTask();
+	private String titile = "";
+	private int itemIndex = -1;
+	private int contentInfo_id;
+
+	private String APPID = "300000006181";
+	private String APPKEY = "457AA96D7771572D";
+	// private String LEASE_PAYCODE = "300006181003";
+	private String channlid = ""; // 默认渠道ID
+
+	private SMSPaycode msmsPaycode;
+	private IAPListener mListener;
+
+	// private int pay_state;
+	private String pay_code = "";
+	private float price;
+	private MyCustomAdapter adapter;
+	private Handler payHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 1:// 订购成功
+					// Toast.makeText(PictureViewActivity.this, (String)
+					// msg.obj,
+					// Toast.LENGTH_SHORT).show();
+					// SharedUtils.setBoolean(contentInfo_id + "", true);
+				// pay_state = 1;
+				// upDatePayState();
+				SharedUtils.setPayState(contentInfo_id, 1);
+				adapter.set_dataList(_dataList);
+				adapter.notifyDataSetChanged();
+				_viewPager.setCurrentItem(needPayList.size() + 1);
+
+				break;
+			case 2:// 订购失败
+					// Toast.makeText(PictureViewActivity.this, (String)
+					// msg.obj,
+					// Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				break;
+			}
+		};
+	};
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.picture_slide);
+		Intent intent = this.getIntent();
+		Bundle b = intent.getExtras();
+		_dataList = (ArrayList<String>) b.getSerializable("dataList");
+		itemIndex = getIntent().getIntExtra("itemIndex", -1);
+		titile = getIntent().getStringExtra("title");
+		contentInfo_id = getIntent().getIntExtra("contentInfo_id", 0);
+		needPayList = (ArrayList<String>) b.getSerializable("needPayList");
+		// pay_state = intent.getIntExtra("pay_state", 0);
+		price = intent.getFloatExtra("price", 0);
+		pay_code = intent.getStringExtra("pay_code");
+		initUI();
+
+	}
+
+	private void initPay() {
+		mListener = new IAPListener(this, payHandler);
+		msmsPaycode = SMSPaycode.getInstance();
+		try {
+			msmsPaycode.setAppInfo(APPID, APPKEY);
+			msmsPaycode.smsInit(this, mListener);
+		} catch (Exception e) {
+		}
+
+	}
+
+	void initUI() {
+		if (!SharedUtils.getBoolean(contentInfo_id + "", false)) {
+			initPay();
+		}
+		lay = (RelativeLayout) findViewById(R.id.layTitle);
+		lay.getBackground().setAlpha(120);
+		img_back = (ImageView) findViewById(R.id.imgBack);
+		txt_indicator = (TextView) findViewById(R.id.indicator);
+		_viewPager = (ViewPager) this.findViewById(R.id.viewPager);
+		adapter = new MyCustomAdapter();
+
+		int position = SharedUtils.getInt(titile + "_position", 0);
+		if (itemIndex == -1) {
+			if (SharedUtils.getPayState(contentInfo_id) == 0) {
+				adapter.set_dataList(needPayList);
+			} else {
+				adapter.set_dataList(_dataList);
+			}
+			_viewPager.setAdapter(adapter);
+			_viewPager.setCurrentItem(position);
+			txt_indicator.setText(getString(R.string.viewpager_indicator,
+					position + 1, _viewPager.getAdapter().getCount()));
+		} else {
+			adapter.set_dataList(_dataList);
+			_viewPager.setAdapter(adapter);
+			txt_indicator.setText(getString(R.string.viewpager_indicator, 1,
+					_viewPager.getAdapter().getCount()));
+		}
+
+		setListener();
+	}
+
+	private void setListener() {
+		img_back.setOnClickListener(this);
+		_viewPager.setOnPageChangeListener(this);
+	}
+
+	// private void upDatePayState() {
+	// new Thread() {
+	// public void run() {
+	// HttpUrlHelper.payCartoon(pay_state);
+	// }
+	// }.start();
+	// }
+
+	View getItemView(int position) {
+		for (int i = 0; i < _viewList.size(); i++) {
+			View v = _viewList.get(i);
+			Integer tag = (Integer) v.getTag();
+			if (tag == position) {
+				return v;
+			}
+		}
+
+		if (position >= 0)
+			return null;
+
+		FrameLayout llItem = new FrameLayout(this);
+		llItem.setBackgroundColor(Color.BLACK);
+		llItem.setTag(-1);
+		PhotoView imgView = new PhotoView(this);
+		imgView.setTag("img");
+		FrameLayout.LayoutParams llp = new FrameLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		llp.gravity = Gravity.CENTER;
+		llItem.addView(imgView, llp);
+		// 添加等待框
+		llp = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		llp.gravity = Gravity.CENTER;
+		ProgressBar bar = new ProgressBar(this);
+		bar.setTag("bar");
+		bar.setVisibility(View.GONE);
+		llItem.addView(bar, llp);
+		_viewList.add(llItem);
+		String s = String.format("new view, size=%d", _viewList.size());
+		MyUtils.showLog(s);
+		return llItem;
+
+	}
+
+	class MyCustomAdapter extends PagerAdapter implements
+			OnDownloadTaskListener {
+		private List<String> _dataList;
+
+		public void set_dataList(List<String> dataList) {
+			this._dataList = dataList;
+		}
+
+		@Override
+		public int getCount() {
+			return _dataList.size();
+		}
+
+		@Override
+		public boolean isViewFromObject(View arg0, Object arg1) {
+			return arg0 == arg1;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			String s = String.format("remove %d", position);
+			MyUtils.showLog(s);
+
+			View v = getItemView(position);
+			if (v != null) {
+				container.removeView(v);
+				v.setTag(-1);
+			}
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页卡
+			String s = String.format("show %d", position);
+			MyUtils.showLog(s);
+
+			Context ctx = PictureViewActivity.this;
+
+			View v = getItemView(-1);
+			v.setTag(position);
+			ProgressBar bar = (ProgressBar) v.findViewWithTag("bar");
+			PhotoView imgView = (PhotoView) v.findViewWithTag("img");
+			imgView.setOnPhotoTapListener(new OnPhotoTapListener() {
+
+				@Override
+				public void onPhotoTap(View view, float x, float y) {
+					if (lay.getVisibility() != View.VISIBLE) {
+						lay.setVisibility(View.VISIBLE);
+						lay.setAnimation(AnimationUtils.loadAnimation(
+								PictureViewActivity.this, R.anim.up_in));
+					} else {
+						lay.setVisibility(View.GONE);
+						lay.setAnimation(AnimationUtils.loadAnimation(
+								PictureViewActivity.this, R.anim.up_out));
+					}
+				}
+			});
+			if (imgView != null) {
+				String link = _dataList.get(position);
+				if (MyUtils.isValidURLString(link)) {
+					String imgfile = DataModule.getLocalImageFileNameByUrl(
+							link, "image-");
+					if (MyUtils.PrivateFileExist(ctx, imgfile)) {
+						imgView.setImageDrawable(MyUtils.loadPrivateBitmapFile(
+								ctx, imgfile));
+					} else {
+						imgView.setImageResource(R.drawable.bg_cover);
+						// 不存在，去下载
+						_downloader.addTask(_downloader.new DownloadTask(ctx,
+								link, imgfile, this, v, position, 0));
+						bar.setVisibility(View.VISIBLE);
+					}
+				}
+
+			}
+
+			container.addView(v, 0);// 添加页卡
+			return v;
+		}
+
+		@Override
+		public void onDownloadSuccessfully(DownloadTask downloadTask) {
+			int position = downloadTask.mArg1;
+			View convertView = downloadTask.contentView;
+
+			Integer key1 = (Integer) convertView.getTag();
+			if (key1 != position) {
+				return;
+			}
+			ProgressBar bar = (ProgressBar) convertView.findViewWithTag("bar");
+			if (bar != null) {
+				bar.setVisibility(View.GONE);
+			}
+			ImageView imgView = (ImageView) convertView.findViewWithTag("img");
+			if (imgView != null) {
+				imgView.setImageDrawable(downloadTask.getDrawable());
+			}
+
+		}
+
+		@Override
+		public void onDownloadFailed(int errCode, DownloadTask downloadTask) {
+
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (itemIndex == -1) {
+			SharedUtils.setInt(titile + "_position",
+					_viewPager.getCurrentItem());
+		}
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.imgBack:
+			finish();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void showPayDialog() {
+		new PromptDialog.Builder(this).setTitle("提示")
+				.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR)
+				.setMessage("订购 '" + titile + "' 整部作品仅需" + price + "元,是否订购?")
+				.setButton1("确定", new PromptDialog.OnClickListener() {
+
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						dialog.dismiss();
+						orderPpay();
+					}
+				}).setButton2("取消", new PromptDialog.OnClickListener() {
+
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						dialog.dismiss();
+					}
+				}).show();
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+	}
+
+	@Override
+	public void onPageSelected(int index) {
+		if (index == _viewPager.getAdapter().getCount() - 1 && itemIndex == -1) {
+			if (SharedUtils.getPayState(contentInfo_id) == 0 && price > 0) {
+				showPayDialog();
+			}
+		}
+		txt_indicator.setText(getString(R.string.viewpager_indicator,
+				index + 1, _viewPager.getAdapter().getCount()));
+	}
+
+	private void orderPpay() {
+		try {
+			msmsPaycode.smsOrder(this, pay_code, channlid, mListener,
+					"0123456789abcdef");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

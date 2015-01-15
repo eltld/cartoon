@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        layout="@layout/titlebar" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:layout_marginLeft="4dip"
+                android:layout_marginRight="4dip"
+                android:layout_marginTop="12dip" >
+
+                <ImageView
+                    android:id="@+id/cover_imageView"
+                    android:layout_width="121dip"
+                    android:layout_height="170dip"
+                    android:src="@drawable/bg_cover" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dip" >
+
+                    <TextView
+                        android:id="@+id/title_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dip"
+                        android:gravity="center_vertical"
+                        android:text="标题"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/txt_pay_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title_textView"
+                        android:text="前两节免费阅读,后续章节需要订购才能阅读"
+                        android:textColor="#ff0000" />
+
+                    <TextView
+                        android:id="@+id/author_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_pay_state"
+                        android:text="作者: 小日本" />
+
+                    <TextView
+                        android:id="@+id/category_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/author_textView"
+                        android:text="类型: 恐怖故事" />
+
+                    <TextView
+                        android:id="@+id/update_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/category_textView"
+                        android:text="更新到18话" />
+
+                    <Button
+                        android:id="@+id/btn_read"
+                        android:layout_width="90dip"
+                        android:layout_height="31dip"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="5dip"
+                        android:background="@drawable/btn_read_selector"
+                        android:text="" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/desc_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dip"
+                android:maxLines="2"
+                android:text=""
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dip" >
+
+                <com.cutv.mobile.component.DashedLine
+                    android:id="@+id/dashedLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:visibility="gone" >
+
+                    <Button
+                        android:id="@+id/btn_expand"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/btn_expand_selector"
+                        android:text="" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <com.cutv.mobile.component.MyGridView
+                android:id="@+id/gridView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:numColumns="4" >
+            </com.cutv.mobile.component.MyGridView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

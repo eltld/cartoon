@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_groupbar"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/groupbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:textColor="#FF6C4E21"
+        android:text="标题" />
+
+    <ImageView
+        android:id="@+id/btn_showall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:src="@drawable/btn_showall_selector"
+        />
+    
+</RelativeLayout>
