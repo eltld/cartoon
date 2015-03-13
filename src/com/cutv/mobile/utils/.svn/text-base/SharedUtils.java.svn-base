@@ -50,4 +50,14 @@ public class SharedUtils {
 		editor.commit();
 
 	}
+
+	public static void setPayState(int cartoon_id, int state) {
+		editor.putInt("pay_state_" + cartoon_id, state);
+		editor.commit();
+	}
+
+	public static int getPayState(int cartoon_id) {
+		return sharedPreferences.getInt("pay_state_" + cartoon_id, 0);
+
+	}
 }

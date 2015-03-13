@@ -58,7 +58,6 @@ public class ContentPageActivity extends BaseActivity implements
 
 	private String APPID = "300000006181";
 	private String APPKEY = "457AA96D7771572D";
-	private String LEASE_PAYCODE = "300006181003";
 	private String channlid = ""; // 默认渠道ID
 
 	private SMSPaycode msmsPaycode;
@@ -71,9 +70,10 @@ public class ContentPageActivity extends BaseActivity implements
 					// Toast.makeText(ContentPageActivity.this, (String)
 					// msg.obj,
 					// Toast.LENGTH_SHORT).show();
-				SharedUtils.setBoolean(_contentInfo.id + "", true);
-				_contentInfo.pay_state = 1;
-				upDatePayState();
+					// SharedUtils.setBoolean(_contentInfo.id + "", true);
+				// _contentInfo.pay_state = 1;
+				SharedUtils.setPayState(_contentInfo.id, 1);
+				// upDatePayState();
 				txt_pay_state.setText("已订购");
 
 				break;
@@ -200,7 +200,7 @@ public class ContentPageActivity extends BaseActivity implements
 						.findViewById(R.id.txt_pay_state);
 				if (_contentInfo.price > 0) {
 					if (txt_pay_state != null) {
-						if (_contentInfo.pay_state == 1) {
+						if (SharedUtils.getPayState(_contentInfo.id) == 1) {
 							txt_pay_state.setText("已订购");
 						} else {
 							txt_pay_state.setText("前两节免费阅读,后续章节需要订购才能阅读");
@@ -220,6 +220,7 @@ public class ContentPageActivity extends BaseActivity implements
 						.findViewById(R.id.category_textView);
 				if (textView != null)
 					textView.setText("类型：" + _contentInfo.category);
+				textView.setVisibility(View.GONE);
 
 				textView = (TextView) _scrollView
 						.findViewById(R.id.update_textView);
@@ -287,6 +288,9 @@ public class ContentPageActivity extends BaseActivity implements
 
 				_scrollView.setVisibility(View.VISIBLE);
 			} else {
+				Toast.makeText(ContentPageActivity.this, "加载失败",
+						Toast.LENGTH_SHORT);
+				finish();
 			}
 			_loadingDlg.dismiss();
 		}
@@ -343,11 +347,14 @@ public class ContentPageActivity extends BaseActivity implements
 	}
 
 	private void playItem(final int itemIndex) {
-		if (itemIndex > 1 && _contentInfo.pay_state == 0
+		if (itemIndex > 1 && SharedUtils.getPayState(_contentInfo.id) == 0
 				&& _contentInfo.price > 0) {
-			new PromptDialog.Builder(this).setTitle("提示")
+			new PromptDialog.Builder(this)
+					.setTitle("温馨提示")
 					.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR)
-					.setMessage("阅读该章节需要付费，是否订购?")
+					.setMessage(
+							"订购 '" + _contentInfo.title + "' 整部作品仅需"
+									+ _contentInfo.price + "元,是否订购?")
 					.setButton1("确定", new PromptDialog.OnClickListener() {
 
 						@Override
@@ -421,6 +428,7 @@ public class ContentPageActivity extends BaseActivity implements
 			intent.putExtra("contentInfo_id", _contentInfo.id);
 			intent.putExtra("pay_state", _contentInfo.pay_state);
 			intent.putExtra("price", _contentInfo.price);
+			intent.putExtra("pay_code", _contentInfo.pay_code);
 			intent.putExtras(b);
 			startActivity(intent);
 

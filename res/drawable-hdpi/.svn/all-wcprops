@@ -111,12 +111,6 @@ svn:wc:ra_dav:version-url
 V 78
 /svn/soniq/!svn/ver/395/android/Cartoon/res/drawable-hdpi/tab_animation_on.png
 END
-ic_launcher.png
-K 25
-svn:wc:ra_dav:version-url
-V 73
-/svn/soniq/!svn/ver/395/android/Cartoon/res/drawable-hdpi/ic_launcher.png
-END
 ._bg_cover.jpg
 K 25
 svn:wc:ra_dav:version-url

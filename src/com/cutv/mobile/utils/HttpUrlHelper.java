@@ -27,9 +27,10 @@ import org.apache.http.util.EntityUtils;
 public class HttpUrlHelper {
 	public static final int CONNECTION_TIMEOUT = 10 * 1000;
 	public static final int SO_TIMEOUT = 10 * 1000;
+
 	// public static final String DEFAULT_HOST =
 	// public static final String DEFAULT_HOST =
-	// "http://10.6.7.158:8080/cartoon/servlet/"; // 服务器地址
+	// "http://10.6.4.105:8080/cartoon/servlet/"; // 服务器地址
 
 	public static final String DEFAULT_HOST = "http://www.timesyw.com:8080/cartoon/servlet/"; // 服务器地址
 
@@ -64,6 +65,9 @@ public class HttpUrlHelper {
 			// 判断是否成功
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				String result = EntityUtils.toString(httpResponse.getEntity());
+				System.out.println("HttpUrlHelper.postUrlData:result::"
+						+ result);
+
 				return result;
 			} else {
 				System.out.println("HttpUrlHelper.postUrlData status code="

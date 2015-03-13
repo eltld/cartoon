@@ -36,15 +36,7 @@ empty
 
 AndroidManifest.xml
 file
-
-
-
-delete
-2014-09-10T07:42:08.597000Z
-f96b3ecf51eeceec6ded459e9a6bdb48
-2014-09-10T08:24:36.172125Z
-395
-songbinbin
+502
 
 
 
@@ -64,22 +56,43 @@ songbinbin
 
 
 
-
-
-1782
+deleted
 
 Cartoon.apk
 file
+502
 
 
 
-delete
-2014-09-10T08:19:56.454000Z
-a52f57020a04acaace0efe7cee615257
-2014-09-10T08:24:36.172125Z
-395
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+R.txt
+file
+502
+
+
+
+2015-03-13T01:17:11.515000Z
+de51ebabed8973476d26dda2de049f38
+2015-03-13T01:18:50.062625Z
+502
 songbinbin
-has-props
 
 
 
@@ -100,23 +113,15 @@ has-props
 
 
 
-1015007
+
+10125
 
 classes
 dir
 
 classes.dex
 file
-
-
-
-delete
-2014-09-10T08:19:56.059000Z
-e0be6f732337d8165bd685a34599e4ac
-2014-09-10T08:24:36.172125Z
-395
-songbinbin
-has-props
+502
 
 
 
@@ -136,35 +141,93 @@ has-props
 
 
 
-
-2993200
+deleted
 
 dexedLibs
 dir
 
 
 
-delete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+jarlist.cache
+file
+502
+
+
+
+2015-03-13T01:17:10.497000Z
+1a4e54903cfe5b5bf05e60ce40d06671
+2015-03-13T01:18:50.062625Z
+502
+songbinbin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+120
 
 res
 dir
 
 
 
-delete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
 
 resources.ap_
 file
-
-
-
-delete
-2014-09-10T08:03:19.880000Z
-5ed7055990fde10305b4bd1508785a33
-2014-09-10T08:24:36.172125Z
-395
-songbinbin
-has-props
+502
 
 
 
@@ -184,6 +247,5 @@ has-props
 
 
 
-
-132287
+deleted
 

@@ -17,16 +17,15 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/textView1"
-            android:layout_marginTop="10dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
             android:gravity="center"
             android:text="啊哦~，加载失败了，点击重新加载！" />
-
     </LinearLayout>
 
 </LinearLayout>

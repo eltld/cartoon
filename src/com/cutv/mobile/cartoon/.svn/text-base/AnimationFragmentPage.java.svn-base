@@ -541,15 +541,15 @@ public class AnimationFragmentPage extends BaseFragment implements
 	@Override
 	public void onclick(int position) {
 		CategoryInfo ci = _categoryList.get(position);
-		if (ci.id != _currentCategoryId) {
-			_currentCategoryId = ci.id;
-			setTitle(ci.title);
-			if (_moreView != null)
-				_listView.removeFooterView(_moreView);
-			_dataList.clear();
-			_adapter.notifyDataSetChanged();
-			doLoadData(true);
-		}
+		// if (ci.id != _currentCategoryId) {
+		// _currentCategoryId = ci.id;
+		setTitle(ci.title);
+		if (_moreView != null)
+			_listView.removeFooterView(_moreView);
+		_dataList.clear();
+		_adapter.notifyDataSetChanged();
+		doLoadData(true);
+		// } 
 	}
 
 }

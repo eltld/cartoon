@@ -60,14 +60,14 @@ public class PictureViewActivity extends BaseActivity implements
 
 	private String APPID = "300000006181";
 	private String APPKEY = "457AA96D7771572D";
-	private String LEASE_PAYCODE = "300006181003";
+	// private String LEASE_PAYCODE = "300006181003";
 	private String channlid = ""; // 默认渠道ID
 
 	private SMSPaycode msmsPaycode;
 	private IAPListener mListener;
 
-	private int pay_state;
-
+	// private int pay_state;
+	private String pay_code = "";
 	private float price;
 	private MyCustomAdapter adapter;
 	private Handler payHandler = new Handler() {
@@ -77,9 +77,10 @@ public class PictureViewActivity extends BaseActivity implements
 					// Toast.makeText(PictureViewActivity.this, (String)
 					// msg.obj,
 					// Toast.LENGTH_SHORT).show();
-				SharedUtils.setBoolean(contentInfo_id + "", true);
-				pay_state = 1;
-				upDatePayState();
+					// SharedUtils.setBoolean(contentInfo_id + "", true);
+				// pay_state = 1;
+				// upDatePayState();
+				SharedUtils.setPayState(contentInfo_id, 1);
 				adapter.set_dataList(_dataList);
 				adapter.notifyDataSetChanged();
 				_viewPager.setCurrentItem(needPayList.size() + 1);
@@ -108,8 +109,9 @@ public class PictureViewActivity extends BaseActivity implements
 		titile = getIntent().getStringExtra("title");
 		contentInfo_id = getIntent().getIntExtra("contentInfo_id", 0);
 		needPayList = (ArrayList<String>) b.getSerializable("needPayList");
-		pay_state = intent.getIntExtra("pay_state", 0);
+		// pay_state = intent.getIntExtra("pay_state", 0);
 		price = intent.getFloatExtra("price", 0);
+		pay_code = intent.getStringExtra("pay_code");
 		initUI();
 
 	}
@@ -138,8 +140,8 @@ public class PictureViewActivity extends BaseActivity implements
 
 		int position = SharedUtils.getInt(titile + "_position", 0);
 		if (itemIndex == -1) {
-			if (SharedUtils.getBoolean(contentInfo_id + "", false)) {
-				adapter.set_dataList(_dataList);
+			if (SharedUtils.getPayState(contentInfo_id) == 0) {
+				adapter.set_dataList(needPayList);
 			} else {
 				adapter.set_dataList(_dataList);
 			}
@@ -162,13 +164,13 @@ public class PictureViewActivity extends BaseActivity implements
 		_viewPager.setOnPageChangeListener(this);
 	}
 
-	private void upDatePayState() {
-		new Thread() {
-			public void run() {
-				HttpUrlHelper.payCartoon(pay_state);
-			}
-		}.start();
-	}
+	// private void upDatePayState() {
+	// new Thread() {
+	// public void run() {
+	// HttpUrlHelper.payCartoon(pay_state);
+	// }
+	// }.start();
+	// }
 
 	View getItemView(int position) {
 		for (int i = 0; i < _viewList.size(); i++) {
@@ -333,7 +335,7 @@ public class PictureViewActivity extends BaseActivity implements
 	private void showPayDialog() {
 		new PromptDialog.Builder(this).setTitle("提示")
 				.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR)
-				.setMessage("继续阅读需要收费，是否订购?")
+				.setMessage("订购 '" + titile + "' 整部作品仅需" + price + "元,是否订购?")
 				.setButton1("确定", new PromptDialog.OnClickListener() {
 
 					@Override
@@ -362,8 +364,8 @@ public class PictureViewActivity extends BaseActivity implements
 
 	@Override
 	public void onPageSelected(int index) {
-		if (index == _viewPager.getAdapter().getCount() - 1) {
-			if (pay_state == 0 && price > 0) {
+		if (index == _viewPager.getAdapter().getCount() - 1 && itemIndex == -1) {
+			if (SharedUtils.getPayState(contentInfo_id) == 0 && price > 0) {
 				showPayDialog();
 			}
 		}
@@ -373,7 +375,7 @@ public class PictureViewActivity extends BaseActivity implements
 
 	private void orderPpay() {
 		try {
-			msmsPaycode.smsOrder(this, LEASE_PAYCODE, channlid, mListener,
+			msmsPaycode.smsOrder(this, pay_code, channlid, mListener,
 					"0123456789abcdef");
 		} catch (Exception e) {
 			e.printStackTrace();

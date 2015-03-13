@@ -571,20 +571,26 @@ public class HomeFragmentPage extends BaseFragment implements
 	public void onItemClick(ImageSlideView view, int itemIndex) {
 		// TODO Auto-generated method stub
 		RecommendInfo ri = _recommendList.get(itemIndex);
-
-		if (ri.action.equals("webpage") || ri.action.equals("page")) {
-			if (ri.link != null && ri.link.length() > 0) {
-				Log.d(MyProfile.TAG, ri.link);
-				Intent intent = new Intent(this.getActivity(),
-						WebViewActivity.class);
-
-				Bundle b = new Bundle();
-				b.putString("link", ri.link);
-				intent.putExtras(b);
-
-				startActivity(intent);
-			}
-		}
+		Intent intent = new Intent(HomeFragmentPage.this.getActivity(),
+				ContentPageActivity.class);
+		Bundle b = new Bundle();
+		b.putInt("id", ri.id);
+		b.putString("title", ri.title);
+		intent.putExtras(b);
+		startActivity(intent);
+		// if (ri.action.equals("webpage") || ri.action.equals("page")) {
+		// if (ri.link != null && ri.link.length() > 0) {
+		// Log.d(MyProfile.TAG, ri.link);
+		// Intent intent = new Intent(this.getActivity(),
+		// WebViewActivity.class);
+		//
+		// Bundle b = new Bundle();
+		// b.putString("link", ri.link);
+		// intent.putExtras(b);
+		//
+		// startActivity(intent);
+		// }
+		// }
 	}
 
 }

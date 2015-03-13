@@ -31,7 +31,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 		txt_version = (TextView) findViewById(R.id.txt_app_version);
 		txt_version.setText("V" + MyUtils.getVersionName(this));
 		mbutton_id = (Button) findViewById(R.id.button1);
-		mbutton_id.setOnClickListener(this);
+		mbutton_id.setOnClickListener(this); 
 
 	}
 

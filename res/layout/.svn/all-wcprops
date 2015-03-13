@@ -37,7 +37,7 @@ activity_about.xml
 K 25
 svn:wc:ra_dav:version-url
 V 69
-/svn/soniq/!svn/ver/444/android/Cartoon/res/layout/activity_about.xml
+/svn/soniq/!svn/ver/502/android/Cartoon/res/layout/activity_about.xml
 END
 fragment_cartoon.xml
 K 25
@@ -55,7 +55,7 @@ loading_failed.xml
 K 25
 svn:wc:ra_dav:version-url
 V 69
-/svn/soniq/!svn/ver/395/android/Cartoon/res/layout/loading_failed.xml
+/svn/soniq/!svn/ver/502/android/Cartoon/res/layout/loading_failed.xml
 END
 general_webview.xml
 K 25
@@ -163,7 +163,7 @@ content_page.xml
 K 25
 svn:wc:ra_dav:version-url
 V 67
-/svn/soniq/!svn/ver/444/android/Cartoon/res/layout/content_page.xml
+/svn/soniq/!svn/ver/502/android/Cartoon/res/layout/content_page.xml
 END
 fragment_animation.xml
 K 25

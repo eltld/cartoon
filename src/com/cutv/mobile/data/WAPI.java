@@ -343,7 +343,6 @@ public class WAPI {
 		DocumentBuilder db = null;
 
 		int ret = 1;
-
 		try {
 			db = dbf.newDocumentBuilder();
 			Document doc = db.parse(inputStream);
@@ -370,6 +369,7 @@ public class WAPI {
 						ci.author = getValueByTagName(e, "author");
 						ci.update = getValueByTagName(e, "update");
 						ci.imgurl = getValueByTagName(e, "imageurl");
+
 						dataList.add(ci);
 					}
 				}

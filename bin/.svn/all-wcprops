@@ -3,27 +3,15 @@ svn:wc:ra_dav:version-url
 V 43
 /svn/soniq/!svn/ver/395/android/Cartoon/bin
 END
-AndroidManifest.xml
+R.txt
 K 25
 svn:wc:ra_dav:version-url
-V 63
-/svn/soniq/!svn/ver/395/android/Cartoon/bin/AndroidManifest.xml
+V 49
+/svn/soniq/!svn/ver/502/android/Cartoon/bin/R.txt
 END
-resources.ap_
+jarlist.cache
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/svn/soniq/!svn/ver/395/android/Cartoon/bin/resources.ap_
-END
-Cartoon.apk
-K 25
-svn:wc:ra_dav:version-url
-V 55
-/svn/soniq/!svn/ver/395/android/Cartoon/bin/Cartoon.apk
-END
-classes.dex
-K 25
-svn:wc:ra_dav:version-url
-V 55
-/svn/soniq/!svn/ver/395/android/Cartoon/bin/classes.dex
+/svn/soniq/!svn/ver/502/android/Cartoon/bin/jarlist.cache
 END

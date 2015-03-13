@@ -1,6 +1,8 @@
 package com.cutv.mobile.cartoon;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +24,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cutv.mobile.component.AsynDownloadImageTask;
@@ -212,6 +212,7 @@ public class RankFragmentPage extends BaseFragment implements
 				if (msg.arg1 == LoadThread.LOAD_TYPE_MORE) {
 					_adapter.notifyDataSetChanged();
 				} else {
+					sort();
 					MyCustomAdapter adapter = new MyCustomAdapter(
 							RankFragmentPage.this.getActivity());
 					adapter.notifyDataSetChanged();
@@ -448,4 +449,14 @@ public class RankFragmentPage extends BaseFragment implements
 
 	}
 
+	private void sort() {
+		Collections.sort(_dataList, new Comparator<ContentInfo>() {
+			@Override
+			public int compare(ContentInfo lhs, ContentInfo rhs) {
+				return Float.compare(rhs.price, lhs.price);
+
+			}
+		});
+
+	}
 }

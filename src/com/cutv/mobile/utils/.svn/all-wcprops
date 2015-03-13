@@ -19,7 +19,7 @@ SharedUtils.java
 K 25
 svn:wc:ra_dav:version-url
 V 82
-/svn/soniq/!svn/ver/443/android/Cartoon/src/com/cutv/mobile/utils/SharedUtils.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/utils/SharedUtils.java
 END
 MyUtils.java
 K 25
@@ -31,7 +31,7 @@ HttpUrlHelper.java
 K 25
 svn:wc:ra_dav:version-url
 V 84
-/svn/soniq/!svn/ver/443/android/Cartoon/src/com/cutv/mobile/utils/HttpUrlHelper.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/utils/HttpUrlHelper.java
 END
 CategoryPopwindow.java
 K 25

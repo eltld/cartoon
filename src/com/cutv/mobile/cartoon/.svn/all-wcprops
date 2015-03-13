@@ -25,7 +25,7 @@ RankFragmentPage.java
 K 25
 svn:wc:ra_dav:version-url
 V 89
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/RankFragmentPage.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/RankFragmentPage.java
 END
 WebViewActivity.java
 K 25
@@ -37,7 +37,7 @@ AnimationFragmentPage.java
 K 25
 svn:wc:ra_dav:version-url
 V 94
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/AnimationFragmentPage.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/AnimationFragmentPage.java
 END
 BaseFragment.java
 K 25
@@ -67,7 +67,7 @@ HomeFragmentPage.java
 K 25
 svn:wc:ra_dav:version-url
 V 89
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/HomeFragmentPage.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/HomeFragmentPage.java
 END
 PictureFragmentPage.java
 K 25
@@ -85,19 +85,19 @@ AboutActivity.java
 K 25
 svn:wc:ra_dav:version-url
 V 86
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/AboutActivity.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/AboutActivity.java
 END
 ContentPageActivity.java
 K 25
 svn:wc:ra_dav:version-url
 V 92
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/ContentPageActivity.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/ContentPageActivity.java
 END
 PictureViewActivity.java
 K 25
 svn:wc:ra_dav:version-url
 V 92
-/svn/soniq/!svn/ver/441/android/Cartoon/src/com/cutv/mobile/cartoon/PictureViewActivity.java
+/svn/soniq/!svn/ver/502/android/Cartoon/src/com/cutv/mobile/cartoon/PictureViewActivity.java
 END
 ClientUpgrade.java
 K 25
